@@ -13,7 +13,10 @@ namespace BankAccountProject
         private double balanceAmount;
         private string accountType;
         private string memberName;
-    
+        private bool checking;
+        private bool savings;
+        private bool reserve;
+
 
         //Properties (2)
 
@@ -59,7 +62,31 @@ namespace BankAccountProject
                 balanceAmount -= amount;
                 string withdrawOutPut = "Withdrawing $" + amount + " from " + accountType;
                 string fileText = memberName + " " + " " + accountType + " " + DateTime.Now + " -" + amount + " " + balanceAmount;
-                StreamWriter writer = new StreamWriter(FileName, true);
+                StreamWriter writer = new StreamWriter("CheckingAccount.txt", true);
+                Console.WriteLine(withdrawOutPut);
+                writer.WriteLine(fileText);
+                string balanceError = ViewAccountBalance(true);
+                writer.WriteLine(balanceError);
+                writer.Close();
+            }
+            else if (amount < balanceAmount)
+            {
+                balanceAmount -= amount;
+                string withdrawOutPut = "Withdrawing $" + amount + " from " + accountType;
+                string fileText = memberName + " " + " " + accountType + " " + DateTime.Now + " -" + amount + " " + balanceAmount;
+                StreamWriter writer = new StreamWriter("SavingsAccount.txt", true);
+                Console.WriteLine(withdrawOutPut);
+                writer.WriteLine(fileText);
+                string balanceError = ViewAccountBalance(true);
+                writer.WriteLine(balanceError);
+                writer.Close();
+            }
+            else if (amount < balanceAmount)
+            {
+                balanceAmount -= amount;
+                string withdrawOutPut = "Withdrawing $" + amount + " from " + accountType;
+                string fileText = memberName + " " + " " + accountType + " " + DateTime.Now + " -" + amount + " " + balanceAmount;
+                StreamWriter writer = new StreamWriter("ReserveAccount.txt", true);
                 Console.WriteLine(withdrawOutPut);
                 writer.WriteLine(fileText);
                 string balanceError = ViewAccountBalance(true);
@@ -75,15 +102,46 @@ namespace BankAccountProject
         //The depositing method
         public void Deposit(double amount)
         {
-            balanceAmount += amount;
-            string depositOutPut = "Depositing $" + amount + " to " + accountType;
-            string fileText = memberName + " " + " " + accountType + " " + DateTime.Now + " +" + amount + " " + balanceAmount;
-            StreamWriter writer = new StreamWriter(FileName, true);
-            Console.WriteLine(depositOutPut);
-            writer.WriteLine(fileText);
-            string balanceError = ViewAccountBalance(true);
-            writer.WriteLine(balanceError);
-            writer.Close();
+            if (checking)
+            {
+                balanceAmount += amount;
+                string depositOutPut = "Depositing $" + amount + " to " + accountType;
+                string fileText = memberName + " " + " " + accountType + " " + DateTime.Now + " +" + amount + " " + balanceAmount;
+                StreamWriter writer = new StreamWriter("CheckingAccount.txt", true);
+                Console.WriteLine(depositOutPut);
+                writer.WriteLine(fileText);
+                string balanceError = ViewAccountBalance(true);
+                writer.WriteLine(balanceError);
+                writer.Close();
+            }
+            else if (savings)
+            {
+                balanceAmount += amount;
+                string depositOutPut = "Depositing $" + amount + " to " + accountType;
+                string fileText = memberName + " " + " " + accountType + " " + DateTime.Now + " +" + amount + " " + balanceAmount;
+                StreamWriter writer = new StreamWriter("SavingsAccount.txt", true);
+                Console.WriteLine(depositOutPut);
+                writer.WriteLine(fileText);
+                string balanceError = ViewAccountBalance(true);
+                writer.WriteLine(balanceError);
+                writer.Close();
+            }
+            else if (reserve)
+                {
+                balanceAmount += amount;
+                string depositOutPut = "Depositing $" + amount + " to " + accountType;
+                string fileText = memberName + " " + " " + accountType + " " + DateTime.Now + " +" + amount + " " + balanceAmount;
+                StreamWriter writer = new StreamWriter("ReserveAccount.txt", true);
+                Console.WriteLine(depositOutPut);
+                writer.WriteLine(fileText);
+                string balanceError = ViewAccountBalance(true);
+                writer.WriteLine(balanceError);
+                writer.Close();
+            }
+            else
+            {
+                Console.WriteLine("Invalid request.");
+            }
         }
         //The view account balance method
         public string ViewAccountBalance(bool writeToConsole)

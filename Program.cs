@@ -20,19 +20,13 @@ namespace BankAccountProject
 
             string memberName = Console.ReadLine();
 
-
-
-            StreamWriter checking = new StreamWriter("CheckingAccount.txt", true);
-            StreamWriter savings = new StreamWriter("SavingsAccount.txt", true);
-            StreamWriter reserve = new StreamWriter("ReserveAccount.txt", true);
-
             double amount = Double.Parse(Console.ReadLine());
 
             SavingsAccount memberSavingsAccount = new SavingsAccount(memberName);
             CheckingAccount memberCheckingAccount = new CheckingAccount(memberName);
             ReserveAccount memberReserveAccount = new ReserveAccount(memberName);
 
-            string accountMenuOptions;
+            string accountOptions;
 
             bool quitting = false;
             do
@@ -41,35 +35,20 @@ namespace BankAccountProject
                 Console.WriteLine("\t1 Checking");
                 Console.WriteLine("\t2 Savings");
                 Console.WriteLine("\t3 Reserve");
-               
 
-                accountMenuOptions = Console.ReadLine();
-                switch (accountMenuOptions)
+
+                accountOptions = Console.ReadLine();
+                switch (accountOptions)
                 {
                     case "1":
-                        AccountMenuOptions(memberCheckingAccount);
-                        using (checking)
-                        {
-                            checking.Write("Checking Account Number 09182431023847." + memberName + amount);
-                        }
-                        checking.Close();
+                        AccountOptions(memberCheckingAccount);
                         break;
                     case "2":
-                        AccountMenuOptions(memberSavingsAccount);
-                        using (savings)
-                        {
-                            savings.Write("Savings Account Number 13248723483." + memberName + amount);
-                        }
-                        savings.Close();
-                            break;
+                        AccountOptions(memberSavingsAccount);
+                        break;
                     case "3":
-                        AccountMenuOptions(memberReserveAccount);
-                        using (reserve)
-                        {
-                            reserve.Write("Reserve Account Number 823472348." + memberName + amount);
-                        }
-                        reserve.Close();
-                            break;
+                        AccountOptions(memberReserveAccount);
+                        break;
                     default:
                         Console.WriteLine("Thank you for visiting Gringott's. Good-bye.");
                         quitting = true;
@@ -77,7 +56,10 @@ namespace BankAccountProject
                 }
             }
             while (!quitting);
-            
+        }
+        public static void AccountOptions(AccountBase memberAccount)
+            {
+            bool quitting = false;
             do
             {
                 Console.WriteLine("What would you like to do?");
@@ -92,10 +74,10 @@ namespace BankAccountProject
                         Console.WriteLine("Enter the amount you would like to deposit.");
                         try
                         {
-                           
+                            double amount = Double.Parse(Console.ReadLine());
                             if (amount > 0)
                             {
-                                memberAccount.Deposited(amount)
+                                memberAccount.Deposited(amount);
                             }
                             else
                             {
@@ -115,13 +97,6 @@ namespace BankAccountProject
                             if (amount > 0)
                             {
                                 memberAccount.Withdrawn(amount);
-                                using (checking) using (savings) using (reserve)
-                                {
-                                    checking.Write("Checking Account Number 09182431023847." + memberName + amount);
-                                    savings.Write("Savings Account Number 13248723483." + memberName + amount);
-                                    reserve.Write("Reserve Account Number 823472348." + memberName + amount);
-                                }
-                                checking.Close(); savings.Close(); reserve.Close();
                             }
                             else
                             {
@@ -144,15 +119,7 @@ namespace BankAccountProject
                 }
         
         }
-
-   
             while (!quitting);
-      
-        }
-
-        private static void AccountMenuOptions(CheckingAccount memberCheckingAccount)
-        {
-            throw new NotImplementedException();
         }
     }
 }
