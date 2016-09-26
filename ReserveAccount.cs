@@ -49,6 +49,7 @@ namespace BankAccountProject
         {
             Console.WriteLine("", amountDeposited);
             this.AmountDeposited = amountDeposited;
+           
         }
     }
 }

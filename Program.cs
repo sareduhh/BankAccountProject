@@ -12,11 +12,19 @@ namespace BankAccountProject
     {
         static void Main(string[] args)
         {
-           
-
             Console.WriteLine("Welcome to Gringott's Bank.");
             Console.WriteLine("Please enter your name.");
+
             string memberName = Console.ReadLine();
+
+            StreamWriter checking = new StreamWriter("CheckingAccount.txt");
+            StreamWriter savings = new StreamWriter("SavingsAccount.txt");
+            StreamWriter reserve = new StreamWriter("ReserveAccount.txt");
+            checking.Write("Checking Account Number 09182431023847." + memberName);
+            savings.Write("Savings Account Number 13248723483." + memberName);
+            reserve.Write("Reserve Account Number 823472348." + memberName);
+
+            
             
 
             SavingsAccount memberSavingsAccount = new SavingsAccount(memberName);
@@ -95,6 +103,7 @@ namespace BankAccountProject
                             if (amount > 0)
                             {
                                 memberAccount.Withdrawn(amount);
+                                
                             }
                             else
                             {
