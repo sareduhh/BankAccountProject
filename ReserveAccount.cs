@@ -9,47 +9,51 @@ namespace BankAccountProject
 {
     class ReserveAccount : AccountBase
     {
-        //Fields (2)
+        //fields (2)
 
-        private string reserveAccountName;
-        private string reserveAccountSettings;
+        private int accountBalance;
+        private string accountNumber;
 
-        //Properties (2)
 
-        public string ReserveAccountName
+        //properties (2)
+      
+        public int AccountBalance
         {
-            get { return this.reserveAccountName; }
-            set { this.reserveAccountName = value; }
+            get { return this.accountBalance; }
+            set { this.accountBalance = value; }
         }
 
-        public string ReserveAccountSettings
+        public string AccountNumber
         {
-            get { return this.reserveAccountSettings; }
-            set { this.reserveAccountSettings = value; }
+            get { return this.accountNumber; }
+            set { this.accountNumber = value; }
         }
 
-        public int AmountDeposited { get; private set; }
-
-        //Constructors (1)
-
-        public ReserveAccount(string memberName) : base("Reserve", memberName)
+        //constructor (1)
+    
+        public ReserveAccount(string memberName) : base(memberName)
         {
-            //follows the default constructor
-            //passes in the reserve type
+            this.accountNumber = "0000234324";
+            this.accountBalance = 7438239;
         }
 
-        //Methods
-        //Withdrawing from the Reserve account.
-        public void Withdrawn(int amountWithdrawn)
+        //methods
+
+        public override int Deposit(int money)
         {
-            Console.WriteLine("");
+            this.accountBalance += money;
+            return this.accountBalance;
         }
-        //Depositing into the Reserve account.
-        public void Deposit(int amountDeposited)
+
+        public override int Withdrawal(int money)
         {
-            Console.WriteLine("", amountDeposited);
-            this.AmountDeposited = amountDeposited;
-           
+            this.accountBalance -= money;
+            return this.accountBalance;
+        }
+
+        public override void ViewAccountBalance()
+        {
+            Console.WriteLine("Account Balance: " + AccountBalance);
         }
     }
 }
