@@ -53,7 +53,7 @@ namespace BankAccountProject
 
         //The withdrawing method
         public void Withdraw(double amount)
-        {
+        { 
             if (amount < balanceAmount)
             {
                 balanceAmount -= amount;
